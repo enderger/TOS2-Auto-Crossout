@@ -14,7 +14,7 @@
     in {
       default = pkgs.mkShell {
         nativeBuildInputs = with pkgs; [
-          fsautocomplete dotnet-sdk_8 just ilspycmd
+          omnisharp-roslyn dotnet-sdk_8 just ilspycmd
         ];
       };
     });
