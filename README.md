@@ -2,7 +2,6 @@
 
 ## NOTES
 - This mod can be fooled by enchanters. Keep a close eye: if you see something which doesn't add up you may have one on your hands!
-- This mod does not (yet) cross out your role in the list
 
 ## BUILDING
 This project can be built in one of 2 ways:
@@ -19,3 +18,9 @@ In both cases, you're result will be found as `dist/AutoCrossout.dll`
 ### Manual
 1. Run `dotnet build -p:SteamLibraryPath="C:\\PATH\TO\YOUR\STEAM\LIBRARY"` (with `-c Release` if you want a release build)
 
+## FUTURE IDEAS
+- Find some way to incorporate manually crossed-out roles
+- Release on Salem Mod Loader
+
+## CREDITS
+- [Curtis](github.com/Curtbot9000), who helped me learn the ropes of TOS2 modding (and who I got the rewritten code using Role Buckets from)

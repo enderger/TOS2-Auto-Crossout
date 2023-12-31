@@ -13,11 +13,5 @@ namespace AutoCrossout
     {
       Console.WriteLine("[" + AutoCrossout.ModInfo.PLUGIN_GUID + "] " + message);
     }
-
-    public static void crossOut(Game.Interface.RoleListItem it)
-    {
-      it.isCrossedOut = true;
-      it.ValidateCrossOut();
-    }
   }
 }
