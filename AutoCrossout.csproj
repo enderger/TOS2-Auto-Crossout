@@ -3,21 +3,12 @@
     <TargetFramework>net481</TargetFramework>
     <OutDir>.\dist</OutDir>
     <LangVersion>8.0</LangVersion>
-    <!--HACK: This is needed until library support is added to Salem Mod Loader -->
-    <OtherFlags>--staticlink:FSharp.Core</OtherFlags>
 
     <!--Change if needed for your IDE tooling/build process-->
     <SteamLibraryPath>/data/ssd/enderger/steam</SteamLibraryPath>
     <CopyLibsFrom>$(SteamLibraryPath)\steamapps\common\Town of Salem 2\TownOfSalem2_Data\Managed</CopyLibsFrom>
     <SalemModLoaderLink>https://github.com/Curtbot9000/SalemModLoader/releases/latest/download/SalemModLoader.dll</SalemModLoaderLink>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="src/ModInfo.fs"/>
-    <Compile Include="src/Utils.fs"/>
-    <Compile Include="src/CrossOutRoles.fs"/>
-    <Compile Include="src/AutoCrossout.fs"/>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="HarmonyX" Version="2.10.2" />
@@ -32,23 +23,8 @@
     <Reference Include="SalemModLoader">
       <HintPath>.\libs\SalemModLoader.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>.\libs\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>.\libs\UnityEngine.AnimationModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>.\libs\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>.\libs\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>.\libs\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>.\libs\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -61,7 +37,7 @@
       <Output TaskParameter="DownloadedFile" ItemName="Content" />
     </DownloadFile>
     <Copy
-     SourceFiles="$(CopyLibsFrom)\Assembly-CSharp.dll;$(CopyLibsFrom)\UnityEngine.AnimationModule.dll;$(CopyLibsFrom)\UnityEngine.CoreModule.dll;$(CopyLibsFrom)\UnityEngine.UIModule.dll;$(CopyLibsFrom)\UnityEngine.PhysicsModule.dll;$(CopyLibsFrom)\UnityEngine.UI.dll;$(CopyLibsFrom)\Unity.TextMeshPro.dll"
+     SourceFiles="$(CopyLibsFrom)\Assembly-CSharp.dll;$(CopyLibsFrom)\UnityEngine.CoreModule.dll;"
      DestinationFolder=".\libs"
     />
   </Target>

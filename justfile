@@ -7,6 +7,3 @@ _build *ARGS:
 
 build dev *ARGS:
   just _build {{ARGS}}
-
-build release *ARGS:
-  just _build -optimize {{ARGS}}
