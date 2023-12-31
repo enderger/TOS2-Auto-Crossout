@@ -1,0 +1,11 @@
+{
+  "HarmonyId": "hutzdog.AutoCrossout",
+  "DisplayName": "Auto Crossout",
+  "Authors": [ "Hutzdog" ],
+  "Description": "Automatically crosses out used slots in wills, automating the tracking of filled slots",
+  "Version": "0.1.0",
+  "Platforms": [ "Windows", "Mac", "Linux" ],
+  "RequiredMods": [],
+  "ConflictingMods": [],
+  "Settings": {}
+}
