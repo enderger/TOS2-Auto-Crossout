@@ -9,7 +9,6 @@ using Server.Shared.State;
 
 namespace AutoCrossout.Patches
 {
-
   [HarmonyPatch(typeof(Game.Interface.HudRoleListAndGraveyardController), "Start")]
   public class RoleListAccessor
   {
@@ -25,12 +24,6 @@ namespace AutoCrossout.Patches
   [HarmonyPatch(typeof(Game.Interface.HudGraveyardPanel), "CreateGraveyardItem")]
   public class CrossOutRoles
   {
-    static void crossOut(Game.Interface.RoleListItem it)
-    {
-      it.isCrossedOut = true;
-      it.ValidateCrossOut();
-    }
-
     [HarmonyPostfix]
     public static void Postfix(Server.Shared.State.KillRecord killRecord)
     {
@@ -42,7 +35,7 @@ namespace AutoCrossout.Patches
         {
           if (item.role == roleKilled)
           {
-            crossOut(item);
+            Utils.crossOut(item);
             return;
           }
           else if (item.role.IsBucket())
@@ -50,7 +43,7 @@ namespace AutoCrossout.Patches
             SharedRoleData.roleBucketLookup.TryGetValue(item.role, out var bucket);
             if (bucket.roles.Contains(roleKilled))
             {
-              crossOut(item);
+              Utils.crossOut(item);
               return;
             }
           }
