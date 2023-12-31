@@ -23,4 +23,4 @@ In both cases, you're result will be found as `dist/AutoCrossout.dll`
 - Release on Salem Mod Loader
 
 ## CREDITS
-- [Curtis](github.com/Curtbot9000), who helped me learn the ropes of TOS2 modding (and who I got the rewritten code using Role Buckets from)
+- [Curtis](https://github.com/Curtbot9000), who helped me learn the ropes of TOS2 modding (and who I got the rewritten code using Role Buckets from)

@@ -116,7 +116,6 @@ namespace AutoCrossout.Patches
       public static void Postfix(GameInfo gameInfo)
       {
         HandlePostfix(gameInfo);
-
       }
     }
   }
