@@ -8,7 +8,7 @@
 This project can be built in one of 2 ways:
 - Using the `just` build runner (which automates the setting of the Steam library path)
 - Manually passing arguments to `dotnet build`
--
+
 In both cases, you're result will be found as `dist/AutoCrossout.dll`
 
 ### With Just
