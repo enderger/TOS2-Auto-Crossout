@@ -15,12 +15,15 @@ namespace AutoCrossout.Patches
     [HarmonyPostfix]
     public static void Postfix(Server.Shared.State.KillRecord killRecord)
     {
-      Server.Shared.State.Role roleKilled = killRecord.playerRole;
-
-      if (killRecord.playerId != Accessors.PlayerRoleInfoAccessor.position)
+      if (SML.ModSettings.GetBool("Cross Out Dead Roles"))
       {
-        Utils.WriteLog("Crossing out dead player's role : " + roleKilled);
-        Accessors.RoleListAccessor.crossOutA(roleKilled);
+        Server.Shared.State.Role roleKilled = killRecord.playerRole;
+
+        if (killRecord.playerId != Accessors.PlayerRoleInfoAccessor.position || !SML.ModSettings.GetBool("Cross Out Player Role"))
+        {
+          Utils.WriteLog("Crossing out dead player's role : " + roleKilled);
+          Accessors.RoleListAccessor.crossOutA(roleKilled);
+        }
       }
     }
   }
@@ -29,10 +32,13 @@ namespace AutoCrossout.Patches
   {
     internal static void HandlePostfix(GameInfo gameInfo)
     {
-      if (gameInfo.playPhase == PlayPhase.FIRST_DISCUSSION && Accessors.PlayerRoleInfoAccessor.role.HasValue)
+      if (SML.ModSettings.GetBool("Cross Out Player Role"))
       {
-        Utils.WriteLog("Crossing out current player's role : " + Accessors.PlayerRoleInfoAccessor.role);
-        Accessors.RoleListAccessor.crossOutA(Accessors.PlayerRoleInfoAccessor.role.Value);
+        if (gameInfo.playPhase == PlayPhase.FIRST_DISCUSSION && Accessors.PlayerRoleInfoAccessor.role.HasValue)
+        {
+          Utils.WriteLog("Crossing out current player's role : " + Accessors.PlayerRoleInfoAccessor.role);
+          Accessors.RoleListAccessor.crossOutA(Accessors.PlayerRoleInfoAccessor.role.Value);
+        }
       }
     }
 

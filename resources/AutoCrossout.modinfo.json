@@ -7,5 +7,20 @@
   "Platforms": [ "Windows", "Mac", "Linux" ],
   "RequiredMods": [],
   "ConflictingMods": [],
-  "Settings": {}
+  "Settings": {
+    "CheckboxSettings": [
+      {
+        "Name": "Cross Out Player Role",
+        "Description": "While in game, cross out your own role",
+        "DefaultValue": true,
+        "AvailableInGame": false,
+      },
+      {
+        "Name": "Cross Out Dead Roles",
+        "Description": "While in game, cross out the role slots of the dead",
+        "DefaultValue": true,
+        "AvailableInGame": false,
+      },
+    ]
+  }
 }
