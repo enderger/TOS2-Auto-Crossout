@@ -11,7 +11,7 @@ This project can be built in one of 2 ways:
 In both cases, you're result will be found as `dist/AutoCrossout.dll`
 
 ### With Just
-1. Install [just](https://github.com/casey/just)
+1. Install [just](https://github.com/casey/just) and one of it's supported `bash` shells (see the page for a list of those)
 2. Edit `.env` to have the path to your Steam library (the folder containing `steamapps`)
 3. Run `just build-dev` or `just build-release` to build a development or release build
 
@@ -24,3 +24,8 @@ In both cases, you're result will be found as `dist/AutoCrossout.dll`
 
 ## CREDITS
 - [Curtis](https://github.com/Curtbot9000), who helped me learn the ropes of TOS2 modding (and who I got the rewritten code using Role Buckets from)
+
+## MIRRORS
+- Contributions should be done on the main repository at <https://sr.ht/~hutzdog/TOS2-Auto-Crossout>
+- A mirror on Codeberg exists at <https://codeberg.org/Hutzdog/TOS2-Auto-Crossout>
+- A mirror on GitHub exists at <https://github.com/enderger/TOS2-Auto-Crossout>
