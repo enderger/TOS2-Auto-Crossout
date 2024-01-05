@@ -3,6 +3,7 @@
     <TargetFramework>net481</TargetFramework>
     <OutDir>.\dist</OutDir>
     <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
 
     <!--Change if needed for your IDE tooling/build process-->
     <SteamLibraryPath>/data/ssd/enderger/steam</SteamLibraryPath>

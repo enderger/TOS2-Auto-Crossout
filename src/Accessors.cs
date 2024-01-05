@@ -13,7 +13,7 @@ namespace AutoCrossout.Accessors
   [HarmonyPatch(typeof(Game.Interface.HudRoleListAndGraveyardController), "Start")]
   public class RoleListAccessor
   {
-    public static Game.Interface.HudRoleListAndGraveyardController hrg_controller = null;
+    public static Game.Interface.HudRoleListAndGraveyardController? hrg_controller = null;
 
     /// <summary>
     /// Cross out a given role list item
@@ -29,7 +29,7 @@ namespace AutoCrossout.Accessors
     /// </summary>
     public static void crossOutA(Role role)
     {
-      foreach (var item in hrg_controller.roleListPanel.roleListItems)
+      foreach (var item in hrg_controller!.roleListPanel.roleListItems)
       {
         if (!item.isCrossedOut)
         {

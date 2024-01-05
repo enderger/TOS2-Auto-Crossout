@@ -9,17 +9,17 @@ using Server.Shared.State;
 
 namespace AutoCrossout.Patches
 {
-  [HarmonyPatch(typeof(Game.Interface.HudGraveyardPanel), "CreateGraveyardItem")]
+  [HarmonyPatch(typeof(Game.Interface.HudGraveyardPanel), nameof(Game.Interface.HudGraveyardPanel.CreateGraveyardItem))]
   public class CrossOutDeadRoles
   {
     [HarmonyPostfix]
     public static void Postfix(Server.Shared.State.KillRecord killRecord)
     {
-      if (SML.ModSettings.GetBool("Cross Out Dead Roles"))
+      if (SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_DEAD))
       {
         Server.Shared.State.Role roleKilled = killRecord.playerRole;
 
-        if (killRecord.playerId != Accessors.PlayerRoleInfoAccessor.position || !SML.ModSettings.GetBool("Cross Out Player Role"))
+        if (killRecord.playerId != Accessors.PlayerRoleInfoAccessor.position || !SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_PLAYER))
         {
           Utils.WriteLog("Crossing out dead player's role : " + roleKilled);
           Accessors.RoleListAccessor.crossOutA(roleKilled);
@@ -32,7 +32,7 @@ namespace AutoCrossout.Patches
   {
     internal static void HandlePostfix(GameInfo gameInfo)
     {
-      if (SML.ModSettings.GetBool("Cross Out Player Role"))
+      if (SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_PLAYER))
       {
         if (gameInfo.playPhase == PlayPhase.FIRST_DISCUSSION && Accessors.PlayerRoleInfoAccessor.role.HasValue)
         {
@@ -44,7 +44,7 @@ namespace AutoCrossout.Patches
 
     // HACK: I need to handle both old and new chats, so this is split out into two patches
     // Unfortunetely, I couldn't find a better place to hook into, as I need the role list ready to perform the crossout
-    [HarmonyPatch(typeof(Game.Interface.ChatViewSwitcher), "HandleGamePhaseChanged")]
+    [HarmonyPatch(typeof(Game.Interface.ChatViewSwitcher), nameof(Game.Interface.ChatViewSwitcher.HandleGamePhaseChanged))]
     public class OldChat
     {
       [HarmonyPostfix]
@@ -54,7 +54,7 @@ namespace AutoCrossout.Patches
       }
     }
 
-    [HarmonyPatch(typeof(Game.Interface.PooledChatViewSwitcher), "HandleGamePhaseChanged")]
+    [HarmonyPatch(typeof(Game.Interface.PooledChatViewSwitcher), nameof(Game.Interface.PooledChatViewSwitcher.HandleGamePhaseChanged))]
     public class NewChat
     {
       [HarmonyPostfix]
