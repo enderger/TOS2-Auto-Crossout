@@ -17,19 +17,15 @@ namespace AutoCrossout.Patches
 
     internal static void HandlePostfix(GameInfo gameInfo)
     {
-      if (SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_PLAYER))
+      if (gameInfo.playPhase == PlayPhase.FIRST_DISCUSSION)
       {
-        if (gameInfo.playPhase == PlayPhase.FIRST_DISCUSSION)
+        foreach (var role in StartingRoles)
         {
-          Utils.WriteLog("Crossing out known player role at start of game : " + Accessors.PlayerRoleInfoAccessor.role);
-
-          foreach (var role in StartingRoles)
-          {
-            Accessors.RoleListAccessor.CrossOutA(role);
-          }
-
-          StartingRoles.Clear();
+          Utils.WriteLog("Crossing out known player role at start of game : " + role);
+          Accessors.RoleListAccessor.CrossOutA(role);
         }
+
+        StartingRoles.Clear();
       }
     }
 
