@@ -6,38 +6,29 @@
 using HarmonyLib;
 using Server.Shared.Info;
 using Server.Shared.State;
+using System.Collections.Generic;
 
 namespace AutoCrossout.Patches
 {
-  [HarmonyPatch(typeof(Game.Interface.HudGraveyardPanel), nameof(Game.Interface.HudGraveyardPanel.CreateGraveyardItem))]
-  public class CrossOutDeadRoles
+  // HACK: Delay crossing out the current player's role until after the game loads
+  public static class CrossOutStartingRoles
   {
-    [HarmonyPostfix]
-    public static void Postfix(Server.Shared.State.KillRecord killRecord)
-    {
-      if (SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_DEAD))
-      {
-        Server.Shared.State.Role roleKilled = killRecord.playerRole;
+    public static List<Role> StartingRoles = new List<Role>();
 
-        if (killRecord.playerId != Accessors.PlayerRoleInfoAccessor.position || !SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_PLAYER))
-        {
-          Utils.WriteLog("Crossing out dead player's role : " + roleKilled);
-          Accessors.RoleListAccessor.crossOutA(roleKilled);
-        }
-      }
-    }
-  }
-
-  public static class CrossOutPlayerRole
-  {
     internal static void HandlePostfix(GameInfo gameInfo)
     {
       if (SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_PLAYER))
       {
-        if (gameInfo.playPhase == PlayPhase.FIRST_DISCUSSION && Accessors.PlayerRoleInfoAccessor.role.HasValue)
+        if (gameInfo.playPhase == PlayPhase.FIRST_DISCUSSION)
         {
-          Utils.WriteLog("Crossing out current player's role : " + Accessors.PlayerRoleInfoAccessor.role);
-          Accessors.RoleListAccessor.crossOutA(Accessors.PlayerRoleInfoAccessor.role.Value);
+          Utils.WriteLog("Crossing out known player role at start of game : " + Accessors.PlayerRoleInfoAccessor.role);
+
+          foreach (var role in StartingRoles)
+          {
+            Accessors.RoleListAccessor.CrossOutA(role);
+          }
+
+          StartingRoles.Clear();
         }
       }
     }
@@ -62,6 +53,33 @@ namespace AutoCrossout.Patches
       {
         HandlePostfix(gameInfo);
       }
+    }
+  }
+
+  [HarmonyPatch(typeof(Game.Simulation.GameObservations), nameof(Game.Simulation.GameObservations.HandlePlayerIdentityObservation))]
+  public class CrossOutRoles
+  {
+    [HarmonyPostfix]
+    public static void Postfix(PlayerIdentityObservation playerIdentityObservation)
+    {
+      var data = playerIdentityObservation.Data;
+      // TODO: uncomment this once BMG actually sets the MemoryType field
+      //if ((data.memoryType == MemoryType.SELF && SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_PLAYER))
+      //    || (data.memoryType == MemoryType.WHO_DIED_AND_HOW && SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_DEAD))
+      //    || (data.memoryType == MemoryType.REVEAL && SML.ModSettings.GetBool(ModInfo.SETTING_CROSS_OUT_REVEALED))
+      //    || data.memoryType == MemoryType.NONE
+      //    )
+      //{
+        if (data.role != Role.UNKNOWN && data.role != Role.NONE && data.role != 0)
+        {
+          Utils.WriteLog("Crossing out role " + data.role + " for player at position " + data.position);
+
+          if (Accessors.RoleListAccessor.hrg_controller != null)
+            Accessors.RoleListAccessor.CrossOutA(data.role);
+          else
+            CrossOutStartingRoles.StartingRoles.Add(data.role);
+        }
+      //}
     }
   }
 }

@@ -23,8 +23,10 @@ namespace AutoCrossout
     public static string PLUGIN_NAME = "Auto Crossout";
     public static string PLUGIN_VERSION = "0.1.0";
 
-    public static string SETTING_CROSS_OUT_DEAD = "Cross Out Dead Roles";
-    public static string SETTING_CROSS_OUT_PLAYER = "Cross Out Player Role";
+    // TODO: re-add once BMG actually sets the observation memory type
+    //public static string SETTING_CROSS_OUT_DEAD = "Cross Out Dead Roles";
+    //public static string SETTING_CROSS_OUT_PLAYER = "Cross Out Player Role";
+    //public static string SETTING_CROSS_OUT_REVEALED = "Cross Out Revealed Roles";
   }
 }
 

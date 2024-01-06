@@ -24,6 +24,7 @@ In both cases, you're result will be found as `dist/AutoCrossout.dll`
 
 ## CREDITS
 - [Curtis](https://github.com/Curtbot9000), who helped me learn the ropes of TOS2 modding (and who I got the rewritten code using Role Buckets from)
+- patr. on Discord, who told me about the `GameObservations` hook that drastically shortened this code and made it more compatible
 
 ## MIRRORS
 - Contributions should be done on the main repository at <https://sr.ht/~hutzdog/TOS2-Auto-Crossout>

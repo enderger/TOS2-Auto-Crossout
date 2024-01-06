@@ -5,12 +5,11 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 using HarmonyLib;
 using Server.Shared.Extensions;
-using Server.Shared.Info;
 using Server.Shared.State;
 
 namespace AutoCrossout.Accessors
 {
-  [HarmonyPatch(typeof(Game.Interface.HudRoleListAndGraveyardController), "Start")]
+  [HarmonyPatch(typeof(Game.Interface.HudRoleListAndGraveyardController), nameof(Game.Interface.HudRoleListAndGraveyardController.Start))]
   public class RoleListAccessor
   {
     public static Game.Interface.HudRoleListAndGraveyardController? hrg_controller = null;
@@ -18,7 +17,7 @@ namespace AutoCrossout.Accessors
     /// <summary>
     /// Cross out a given role list item
     /// </summary>
-    public static void crossOut(Game.Interface.RoleListItem it)
+    public static void CrossOut(Game.Interface.RoleListItem it)
     {
       it.isCrossedOut = true;
       it.ValidateCrossOut();
@@ -27,15 +26,18 @@ namespace AutoCrossout.Accessors
     /// <summary>
     /// Cross out the slot for a given role in the role list
     /// </summary>
-    public static void crossOutA(Role role)
+    public static void CrossOutA(Role role)
     {
+      if (hrg_controller == null)
+        return;
+
       foreach (var item in hrg_controller!.roleListPanel.roleListItems)
       {
         if (!item.isCrossedOut)
         {
           if (item.role == role)
           {
-            crossOut(item);
+            CrossOut(item);
             return;
           }
           else if (item.role.IsBucket())
@@ -43,7 +45,7 @@ namespace AutoCrossout.Accessors
             SharedRoleData.roleBucketLookup.TryGetValue(item.role, out var bucket);
             if (bucket.roles.Contains(role))
             {
-              crossOut(item);
+              CrossOut(item);
               return;
             }
           }
@@ -55,20 +57,6 @@ namespace AutoCrossout.Accessors
     public static void Postfix(Game.Interface.HudRoleListAndGraveyardController __instance)
     {
       hrg_controller = __instance;
-    }
-  }
-
-  [HarmonyPatch(typeof(Game.Interface.RoleCardPanel), "HandleOnMyIdentityChanged")]
-  public class PlayerRoleInfoAccessor
-  {
-    public static int? position = null;
-    public static Role? role = null;
-
-    [HarmonyPostfix]
-    public static void Postfix(PlayerIdentityData playerIdentityData)
-    {
-      position = playerIdentityData.position;
-      role = playerIdentityData.role;
     }
   }
 }
