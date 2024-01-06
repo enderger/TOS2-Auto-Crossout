@@ -3,7 +3,7 @@
   "DisplayName": "Auto Crossout",
   "Authors": [ "Hutzdog" ],
   "Description": "Automatically crosses out used slots in wills. Source code available at https://sr.ht/~hutzdog/TOS2-Auto-Crossout/",
-  "Version": "0.1.0",
+  "Version": "0.2.0",
   "Platforms": [ "Windows", "Mac", "Linux" ],
   "RequiredMods": [],
   "ConflictingMods": [],
