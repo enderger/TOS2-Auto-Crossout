@@ -21,7 +21,7 @@ namespace AutoCrossout.Patches
       {
         foreach (var role in StartingRoles)
         {
-          Utils.WriteLog("Crossing out known player role at start of game : " + role);
+          Utils.WriteDebug("Crossing out known player role at start of game : " + role);
           Accessors.RoleListAccessor.CrossOutA(role);
         }
 
@@ -68,12 +68,17 @@ namespace AutoCrossout.Patches
       //{
         if (data.role != Role.UNKNOWN && data.role != Role.NONE && data.role != 0)
         {
-          Utils.WriteLog("Crossing out role " + data.role + " for player at position " + data.position);
+          Utils.WriteDebug("Crossing out role " + data.role + " for player at position " + data.position);
 
-          if (Accessors.RoleListAccessor.hrg_controller != null)
+          if (Pepper.IsGamePhasePlay() && Accessors.RoleListAccessor.hrg_controller != null)
             Accessors.RoleListAccessor.CrossOutA(data.role);
-          else
+          else if (Pepper.IsRoleRevealPhase() || Pepper.IsGamePhasePlay())
             CrossOutStartingRoles.StartingRoles.Add(data.role);
+          else 
+          {
+            Utils.WriteDebug("Cancelling role crossout: not in correct game phase");
+            return;
+          }
         }
       //}
     }

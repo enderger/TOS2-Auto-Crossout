@@ -13,5 +13,12 @@ namespace AutoCrossout
     {
       Console.WriteLine("[" + AutoCrossout.ModInfo.PLUGIN_GUID + "] " + message);
     }
+
+    public static void WriteDebug(string message)
+    {
+#if DEBUG
+      Console.WriteLine("[" + AutoCrossout.ModInfo.PLUGIN_GUID + "] " + message);
+#endif
+    }
   }
 }

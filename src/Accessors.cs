@@ -28,8 +28,11 @@ namespace AutoCrossout.Accessors
     /// </summary>
     public static void CrossOutA(Role role)
     {
-      if (hrg_controller == null)
+      if (hrg_controller == null || !(Pepper.IsRoleRevealPhase() || Pepper.IsGamePhasePlay()))
+      {
+        Utils.WriteDebug("Cancelling crossout due to incorrect phase");
         return;
+      }
 
       foreach (var item in hrg_controller!.roleListPanel.roleListItems)
       {
