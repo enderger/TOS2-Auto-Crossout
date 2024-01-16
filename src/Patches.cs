@@ -72,7 +72,7 @@ namespace AutoCrossout.Patches
 
           if (Pepper.IsGamePhasePlay() && Accessors.RoleListAccessor.hrg_controller != null)
             Accessors.RoleListAccessor.CrossOutA(data.role);
-          else if (Pepper.IsRoleRevealPhase() || Pepper.IsGamePhasePlay())
+          else if (Pepper.IsRoleRevealPhase() || Pepper.IsPickNamesOrGamePhase())
             CrossOutStartingRoles.StartingRoles.Add(data.role);
           else 
           {
