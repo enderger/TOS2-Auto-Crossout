@@ -10,3 +10,9 @@ build-dev *ARGS:
 
 build-release *ARGS:
   just _build -c Release {{ARGS}}
+
+install-dev *ARGS: (build-dev ARGS)
+  cp dist/AutoCrossout.dll "${STEAM_LIBRARY_PATH}/steamapps/common/Town of Salem 2/SalemModLoader/Mods/"
+
+install-release *ARGS: (build-release ARGS)
+  cp dist/AutoCrossout.dll "${STEAM_LIBRARY_PATH}/steamapps/common/Town of Salem 2/SalemModLoader/Mods/"

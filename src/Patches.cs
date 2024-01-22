@@ -72,9 +72,9 @@ namespace AutoCrossout.Patches
 
           if (Pepper.IsGamePhasePlay() && Accessors.RoleListAccessor.hrg_controller != null)
             Accessors.RoleListAccessor.CrossOutA(data.role);
-          else if (Pepper.IsRoleRevealPhase() || Pepper.IsPickNamesOrGamePhase())
+          else if (Pepper.IsRoleRevealPhase() || Pepper.IsGamePhasePlay())
             CrossOutStartingRoles.StartingRoles.Add(data.role);
-          else 
+          else
           {
             Utils.WriteDebug("Cancelling role crossout: not in correct game phase");
             return;
