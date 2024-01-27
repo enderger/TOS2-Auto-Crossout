@@ -6,6 +6,7 @@
 using HarmonyLib;
 using Server.Shared.Extensions;
 using Server.Shared.State;
+using System.Collections.Generic;
 
 namespace AutoCrossout.Accessors
 {
@@ -13,6 +14,7 @@ namespace AutoCrossout.Accessors
   public class RoleListAccessor
   {
     public static Game.Interface.HudRoleListAndGraveyardController? hrg_controller = null;
+    public static List<uint> players_with_known_roles = new List<uint>();
 
     /// <summary>
     /// Cross out a given role list item
@@ -26,13 +28,20 @@ namespace AutoCrossout.Accessors
     /// <summary>
     /// Cross out the slot for a given role in the role list
     /// </summary>
-    public static void CrossOutA(Role role)
+    public static void CrossOutA(Role role, uint position)
     {
       if (hrg_controller == null || !(Pepper.IsRoleRevealPhase() || Pepper.IsGamePhasePlay()))
       {
         Utils.WriteDebug("Cancelling crossout due to incorrect phase");
         return;
       }
+
+      if (players_with_known_roles.Contains(position))
+      {
+        Utils.WriteDebug("Cancelling crossout : player role already crossed out");
+        return;
+      }
+      players_with_known_roles.Add(position);
 
       foreach (var item in hrg_controller!.roleListPanel.roleListItems)
       {
@@ -59,6 +68,7 @@ namespace AutoCrossout.Accessors
     [HarmonyPostfix]
     public static void Postfix(Game.Interface.HudRoleListAndGraveyardController __instance)
     {
+      players_with_known_roles.Clear();
       hrg_controller = __instance;
     }
   }

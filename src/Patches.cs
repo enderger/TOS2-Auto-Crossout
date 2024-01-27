@@ -13,7 +13,7 @@ namespace AutoCrossout.Patches
   // HACK: Delay crossing out the current player's role until after the game loads
   public static class CrossOutStartingRoles
   {
-    public static List<Role> StartingRoles = new List<Role>();
+    public static List<(Role, uint)> StartingRoles = new List<(Role, uint)>();
 
     internal static void HandlePostfix(GameInfo gameInfo)
     {
@@ -22,7 +22,7 @@ namespace AutoCrossout.Patches
         foreach (var role in StartingRoles)
         {
           Utils.WriteDebug("Crossing out known player role at start of game : " + role);
-          Accessors.RoleListAccessor.CrossOutA(role);
+          Accessors.RoleListAccessor.CrossOutA(role.Item1, role.Item2);
         }
 
         StartingRoles.Clear();
@@ -71,9 +71,9 @@ namespace AutoCrossout.Patches
           Utils.WriteDebug("Crossing out role " + data.role + " for player at position " + data.position);
 
           if (Pepper.IsGamePhasePlay() && Accessors.RoleListAccessor.hrg_controller != null)
-            Accessors.RoleListAccessor.CrossOutA(data.role);
+            Accessors.RoleListAccessor.CrossOutA(data.role, (uint)data.position);
           else if (Pepper.IsRoleRevealPhase() || Pepper.IsGamePhasePlay())
-            CrossOutStartingRoles.StartingRoles.Add(data.role);
+            CrossOutStartingRoles.StartingRoles.Add((data.role, (uint)data.position));
           else
           {
             Utils.WriteDebug("Cancelling role crossout: not in correct game phase");
